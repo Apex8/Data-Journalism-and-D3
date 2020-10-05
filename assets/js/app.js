@@ -1,72 +1,70 @@
-var svgWidth = 960;
-var svgHeight = 500;
+var svgWidth = parseInt(d3.select('#scatter').style('width'));
+var svgHeight = svgWidth - svgWidth / 3.9;
+var margin = 20;
+var pad = 40;
+var labelArea = 110;
 
-var margin = {
-  top: 20,
-  right: 40,
-  bottom: 80,
-  left: 100
-};
+// var margin = {
+//     top: 20,
+//     right: 40,
+//     bottom: 80,
+//     left: 100
+// };
 
-var width = svgWidth - margin.left - margin.right;
-var height = svgHeight - margin.top - margin.bottom;
-var chart = d3.select("#scatter").append("div").classed("chart", true);
+var width = svgWidth - 2 * margin - 2 * pad;
+var height = svgHeight - 2 * margin;
 
 var svg = d3
-  .select("body")
-  .append("svg")
-  .attr("width", svgWidth)
-  .attr("height", svgHeight);
+    .select("#scatter")
+    .append("svg")
+    .attr('class', 'chart')
+    .attr("width", svgWidth)
+    .attr("height", svgHeight);
 
 var chartGroup = svg.append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    .attr("transform", `translate(${margin}, ${margin})`);
 
 d3.select("body")
-  .append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 0);
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
-d3.csv("data.csv").then(function(data, err) {
+var testData;
+
+d3.csv("assets/data/data.csv").then(function (data, err) {
     if (err) throw err;
-console.log(healthData)
 
-    healthData.forEach(function(data) {
-        data.poverty = +data.poverty;
-        data.healthcare = +healthcare;
-    });
+    testData = data;
 
     var xLinearScale = d3.scaleLinear().range([0, width]);
     var yLinearScale = d3.scaleLinear().range([height, 0]);
 
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
-  
+
     var xMin;
     var xMax;
     var yMin;
     var yMax;
 
-    xMin = d3.min(healthData, function(data) {
+    xMin = d3.min(data, function (data) {
         return data.healthcare;
     });
-    
-    xMax = d3.max(healthData, function(data) {
+
+    xMax = d3.max(data, function (data) {
         return data.healthcare;
     });
-    
-    yMin = d3.min(healthData, function(data) {
-        return data.poverty;
-    });
-    
-    yMax = d3.max(healthData, function(data) {
+
+    yMin = d3.min(data, function (data) {
         return data.poverty;
     });
 
-    xLinearScale.domain([xMin, xMax]);
-    yLinearScale.domain([yMin, yMax]);
-    
-    console.log(xMin);
-    console.log(yMax);
+    yMax = d3.max(data, function (data) {
+        return data.poverty;
+    });
+
+    var xScale = xLinearScale.domain([xMin, xMax]);
+    var yScale = yLinearScale.domain([yMin, yMax]);
 
     var xAxis = chartGroup.append("g")
         .classed("x-axis", true)
@@ -77,54 +75,54 @@ console.log(healthData)
         .call(leftAxis);
 
     var circlesGroup = chartGroup.selectAll("circle")
-        .data(healthData)
+        .data(data)
         .enter()
         .append("circle")
-        .attr("cx", d => xLinearScale(d.healthcare)
-        .attr("cy", d => yLinearScale(d.poverty))
+        .attr("cx", d => xScale(d.healthcare))
+        .attr("cy", d => yScale(d.poverty))
         .attr("r", 20)
         .attr("fill", "green")
         .attr("opacity", ".5")
-        .on("mouseout", function(data, index) {
-          toolTip.hide(data);
-        }));
+        .on("mouseout", function (data, index) {
+            toolTip.hide(data);
+        })
 
     var toolTip = d3.tip()
         .attr("class", "tooltip")
         .offset([80, -60])
-        .html(function(d) {
-        return (abbr + '%');
+        .html(function (d) {
+            return (abbr + '%');
         });
-       
+
     chartGroup.call(toolTip);
 
     circlesGroup.call(toolTip);
 
-    circlesGroup.on("mouseover", function(healthData) {
+    circlesGroup.on("mouseover", function (healthData) {
         toolTip.show(healthData);
     })
 
-    .on("mouseout", function(healthData, index) {
-        toolTip.hide(healthData);
-    });
+        .on("mouseout", function (healthData) {
+            toolTip.hide(healthData);
+        });
 
     chartGroup.append("text")
-    .style("font-size", "10px")
-    .selectAll("tspan")
-    .data(healthData)
-    .enter()
-    .append("tspan")
-        .attr("x", function(data) {
-            return xLinearScale(data.healthcare +1.4);
+        .style("font-size", "10px")
+        .selectAll("tspan")
+        .data(data)
+        .enter()
+        .append("tspan")
+        .attr("x", function (data) {
+            return xScale(data.healthcare + 1.4);
         })
-        .attr("y", function(data) {
-            return yLinearScale(data.poverty +.2);
+        .attr("y", function (data) {
+            return yScale(data.poverty + .2);
         })
-        .text(function(data) {
+        .text(function (data) {
             return data.abbr
         });
 
-        chartGroup.append("text")
+    chartGroup.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left + 40)
         .attr("x", 0 - (height / 1.5))
@@ -132,10 +130,11 @@ console.log(healthData)
         .attr("class", "axisText")
         .text("Lacks Healthcare(%)");
 
-        chartGroup.append("g")
+    chartGroup.append("g")
         .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
         .attr("class", "axisText")
         .text("In Poverty (%)")
-        .catch(function(error) {
-  console.log(error);
-})});
+        .catch(function (error) {
+            console.log(error);
+        })
+});
