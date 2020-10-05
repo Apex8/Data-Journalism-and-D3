@@ -46,3 +46,18 @@ console.log(healthData)
     var yMin;
     var yMax;
 
+    xMin = d3.min(healthData, function(data) {
+        return data.healthcare;
+    });
+    
+    xMax = d3.max(healthData, function(data) {
+        return data.healthcare;
+    });
+    
+    yMin = d3.min(healthData, function(data) {
+        return data.poverty;
+    });
+    
+    yMax = d3.max(healthData, function(data) {
+        return data.poverty;
+    });
