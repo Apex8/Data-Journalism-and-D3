@@ -38,3 +38,11 @@ console.log(healthData)
     var xLinearScale = d3.scaleLinear().range([0, width]);
     var yLinearScale = d3.scaleLinear().range([height, 0]);
 
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var leftAxis = d3.axisLeft(yLinearScale);
+  
+    var xMin;
+    var xMax;
+    var yMin;
+    var yMax;
+
