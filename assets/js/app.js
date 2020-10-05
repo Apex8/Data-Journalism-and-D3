@@ -137,4 +137,5 @@ console.log(healthData)
         .attr("class", "axisText")
         .text("In Poverty (%)")
         .catch(function(error) {
-  console.log(error);});
+  console.log(error);
+});
