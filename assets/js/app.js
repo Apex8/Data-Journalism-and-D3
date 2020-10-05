@@ -123,3 +123,11 @@ console.log(healthData)
         .text(function(data) {
             return data.abbr
         });
+
+        chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 40)
+        .attr("x", 0 - (height / 1.5))
+        .attr("dy", "1em")
+        .attr("class", "axisText")
+        .text("Lacks Healthcare(%)");
