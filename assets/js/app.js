@@ -25,3 +25,16 @@ d3.select("body")
   .append("div")
   .attr("class", "tooltip")
   .style("opacity", 0);
+
+d3.csv("data.csv").then(function(data, err) {
+    if (err) throw err;
+console.log(healthData)
+
+    healthData.forEach(function(data) {
+        data.poverty = +data.poverty;
+        data.healthcare = +healthcare;
+    });
+
+    var xLinearScale = d3.scaleLinear().range([0, width]);
+    var yLinearScale = d3.scaleLinear().range([height, 0]);
+
