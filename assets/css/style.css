@@ -29,3 +29,22 @@ body {
   margin: 0;
   font-size: 16px;
 }
+
+.inactive {
+  stroke: gray;
+  font-size: 14px;
+}
+
+.active{
+  font-size: 18px;
+}
+
+.scatter{
+  padding-bottom: 10px;
+}
+
+.tooltip{
+  background-color: #e7d189;
+  text-align:center;
+  padding: 10px;
+}
