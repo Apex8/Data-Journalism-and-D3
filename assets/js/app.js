@@ -96,4 +96,30 @@ console.log(healthData)
         return (abbr + '%');
         });
        
-       chartGroup.call(toolTip);
+    chartGroup.call(toolTip);
+
+    circlesGroup.call(toolTip);
+
+    circlesGroup.on("mouseover", function(healthData) {
+        toolTip.show(healthData);
+    })
+
+    .on("mouseout", function(healthData, index) {
+        toolTip.hide(healthData);
+    });
+
+    chartGroup.append("text")
+    .style("font-size", "10px")
+    .selectAll("tspan")
+    .data(healthData)
+    .enter()
+    .append("tspan")
+        .attr("x", function(data) {
+            return xLinearScale(data.healthcare +1.4);
+        })
+        .attr("y", function(data) {
+            return yLinearScale(data.poverty +.2);
+        })
+        .text(function(data) {
+            return data.abbr
+        });
