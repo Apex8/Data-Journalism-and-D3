@@ -131,3 +131,10 @@ console.log(healthData)
         .attr("dy", "1em")
         .attr("class", "axisText")
         .text("Lacks Healthcare(%)");
+
+        chartGroup.append("g")
+        .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
+        .attr("class", "axisText")
+        .text("In Poverty (%)")
+        .catch(function(error) {
+  console.log(error);});
