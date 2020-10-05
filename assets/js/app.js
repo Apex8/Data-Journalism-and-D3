@@ -61,3 +61,18 @@ console.log(healthData)
     yMax = d3.max(healthData, function(data) {
         return data.poverty;
     });
+
+    xLinearScale.domain([xMin, xMax]);
+    yLinearScale.domain([yMin, yMax]);
+    
+    console.log(xMin);
+    console.log(yMax);
+
+    var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
+
+    chartGroup.append("g")
+        .call(leftAxis);
+  
