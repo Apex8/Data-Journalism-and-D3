@@ -75,4 +75,18 @@ console.log(healthData)
 
     chartGroup.append("g")
         .call(leftAxis);
-  
+
+    var circlesGroup = chartGroup.selectAll("circle")
+        .data(healthData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d.healthcare)
+        .attr("cy", d => yLinearScale(d.poverty))
+        .attr("r", 20)
+        .attr("fill", "green")
+        .attr("opacity", ".5")
+        .on("mouseout", function(data, index) {
+          toolTip.hide(data);
+        }));
+
+        
