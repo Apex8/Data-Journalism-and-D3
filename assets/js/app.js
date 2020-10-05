@@ -89,4 +89,11 @@ console.log(healthData)
           toolTip.hide(data);
         }));
 
-        
+    var toolTip = d3.tip()
+        .attr("class", "tooltip")
+        .offset([80, -60])
+        .html(function(d) {
+        return (abbr + '%');
+        });
+       
+       chartGroup.call(toolTip);
