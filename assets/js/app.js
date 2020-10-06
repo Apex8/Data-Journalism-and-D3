@@ -83,7 +83,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .attr("class", "tooltip")
         .offset([80, -60])
         .html(function (d) {
-            return (abbr + '%');
+            return (`${d.abbr}`);
         });
 
     chartGroup.call(toolTip);
