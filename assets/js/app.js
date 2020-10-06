@@ -112,16 +112,16 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
                 return data.abbr
             });
 
-        chartGroup.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 40)
-            .attr("x", 0 - (height / 1.5))
-            .attr("dy", "1em")
-            .attr("class", "text")
-            .text("Lacks Healthcare(%)");
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 40)
+        .attr("x", 0 - (height / 1.5))
+        .attr("dy", "1em")
+        .attr("class", "text")
+        .text("Lacks Healthcare(%)");
 
-        chartGroup.append("g")
-            .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
-            .attr("class", "text")
-            .text("In Poverty (%)");
+    chartGroup.append("g")
+        .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
+        .attr("class", "text")
+        .text("In Poverty (%)");
 });
