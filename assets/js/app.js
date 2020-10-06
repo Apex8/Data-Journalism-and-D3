@@ -21,12 +21,12 @@ d3.select("body")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-var testData;
+var data;
 
 d3.csv("assets/data/data.csv").then(function (data, err) {
     if (err) throw err;
 
-    testData = data;
+    data = data;
 
     var xLinearScale = d3.scaleLinear().range([0, width]);
     var yLinearScale = d3.scaleLinear().range([height, 0]);
@@ -77,7 +77,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .attr("opacity", ".5")
         .on("mouseout", function (data) {
             toolTip.hide(data);
-        })
+        });
 
     var toolTip = d3.tip()
         .attr("class", "tooltip")
@@ -90,12 +90,12 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
 
     circlesGroup.call(toolTip);
 
-    circlesGroup.on("mouseover", function (healthData) {
-        toolTip.show(healthData);
+    circlesGroup.on("mouseover", function (data) {
+        toolTip.show(data);
     })
 
-        .on("mouseout", function (healthData) {
-            toolTip.hide(healthData);
+        .on("mouseout", function (data) {
+            toolTip.hide(data);
         });
 
     chartGroup.append("text")
