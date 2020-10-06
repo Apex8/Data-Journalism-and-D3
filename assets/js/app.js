@@ -3,14 +3,6 @@ var svgHeight = svgWidth - svgWidth / 3.9;
 var margin = 20;
 var pad = 40;
 var labelArea = 110;
-
-// var margin = {
-//     top: 20,
-//     right: 40,
-//     bottom: 80,
-//     left: 100
-// };
-
 var width = svgWidth - 2 * margin - 2 * pad;
 var height = svgHeight - 2 * margin;
 
@@ -66,7 +58,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
     var xScale = xLinearScale.domain([xMin, xMax]);
     var yScale = yLinearScale.domain([yMin, yMax]);
 
-    var xAxis = chartGroup.append("g")
+    chartGroup.append("g")
         .classed("x-axis", true)
         .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
@@ -78,12 +70,12 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", d => xScale(d.healthcare))
-        .attr("cy", d => yScale(d.poverty))
+        .attr("cx", d => xScale(d.healthcare +2))
+        .attr("cy", d => yScale(d.poverty +1))
         .attr("r", 20)
         .attr("fill", "green")
         .attr("opacity", ".5")
-        .on("mouseout", function (data, index) {
+        .on("mouseout", function (data) {
             toolTip.hide(data);
         })
 
@@ -133,8 +125,5 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
     chartGroup.append("g")
         .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
         .attr("class", "axisText")
-        .text("In Poverty (%)")
-        .catch(function (error) {
-            console.log(error);
-        })
+        .text("In Poverty (%)");
 });
