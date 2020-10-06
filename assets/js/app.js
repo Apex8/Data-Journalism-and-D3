@@ -1,10 +1,11 @@
 var svgWidth = parseInt(d3.select('#scatter').style('width')) * 1.5;
 var svgHeight = svgWidth - svgWidth / 3;
-var margin = 30;
+var margin = 40;
 var pad = 40;
 var labelArea = 120;
 var width = svgWidth - 2 * margin - 2 * pad;
 var height = svgHeight - 2 * margin;
+var chart = d3.select("#scatter").append("div").classed("chart", true);
 
 var svg = d3
     .select("#scatter")
@@ -21,12 +22,9 @@ d3.select("body")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-var data;
 
 d3.csv("assets/data/data.csv").then(function (data, err) {
     if (err) throw err;
-
-    data = data;
 
     var xLinearScale = d3.scaleLinear().range([0, width]);
     var yLinearScale = d3.scaleLinear().range([height, 0]);
@@ -104,26 +102,26 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .data(data)
         .enter()
         .append("tspan")
-        .attr("x", function (data) {
-            return xScale(data.healthcare + 1.5);
-        })
-        .attr("y", function (data) {
-            return yScale(data.poverty + .5);
-        })
-        .text(function (data) {
-            return data.abbr
-        });
+            .attr("x", function (data) {
+                return xScale(data.healthcare + 1.5);
+            })
+            .attr("y", function (data) {
+                return yScale(data.poverty + .5);
+            })
+            .text(function (data) {
+                return data.abbr
+            });
 
-    chartGroup.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left + 40)
-        .attr("x", 0 - (height / 1.5))
-        .attr("dy", "1em")
-        .attr("class", "text")
-        .text("Lacks Healthcare(%)");
+        chartGroup.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left + 40)
+            .attr("x", 0 - (height / 1.5))
+            .attr("dy", "1em")
+            .attr("class", "text")
+            .text("Lacks Healthcare(%)");
 
-    chartGroup.append("g")
-        .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
-        .attr("class", "text")
-        .text("In Poverty (%)");
+        chartGroup.append("g")
+            .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
+            .attr("class", "text")
+            .text("In Poverty (%)");
 });
