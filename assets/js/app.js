@@ -1,6 +1,6 @@
-var svgWidth = parseInt(d3.select('#scatter').style('width')) * 1.5;
+var svgWidth = parseInt(d3.select('#scatter').style('width')) * 3;
 var svgHeight = svgWidth - svgWidth / 2;
-var margin = {top:10, right:10, bottom: 10, left: 80};
+var margin = {top:10, right:10, bottom: 10, left: 20};
 var width = svgWidth * .8;
 var height = svgHeight * .8;
 
