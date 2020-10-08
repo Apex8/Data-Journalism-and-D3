@@ -1,5 +1,5 @@
-var svgWidth = parseInt(d3.select('#scatter').style('width')) * 3;
-var svgHeight = svgWidth - svgWidth / 2;
+var svgWidth = parseInt(d3.select('#scatter').style('width')) * 3.5;
+var svgHeight = svgWidth - svgWidth / 1.5;
 var margin = {top:10, right:10, bottom: 10, left: 20};
 var width = svgWidth * .8;
 var height = svgHeight * .8;
@@ -100,7 +100,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         });
 
     chartGroup.append("text")
-        .style("font-size", "10px")
+        .style("font-size", "12px")
         .selectAll("tspan")
         .data(data)
         .enter()
@@ -123,7 +123,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .attr("class", "text")
         .text("Lacks Healthcare(%)");
 
-    chartGroup.append("g")
+    chartGroup.append("text")
         .attr("transform", `translate(${width / 1.5}, ${height + margin.top + 40})`)
         .attr("class", "text")
         .text("In Poverty (%)");
