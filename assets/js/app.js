@@ -1,11 +1,9 @@
 var svgWidth = parseInt(d3.select('#scatter').style('width')) * 1.5;
-var svgHeight = svgWidth - svgWidth / 3;
-var margin = 40;
-var pad = 40;
-var labelArea = 120;
-var width = svgWidth - 2 * margin - 2 * pad;
-var height = svgHeight - 2 * margin;
-var chart = d3.select("#scatter").append("div").classed("chart", true);
+var svgHeight = svgWidth - svgWidth / 2;
+var margin = {top:10, right:10, bottom: 10, left: 80};
+var width = svgWidth * .8;
+var height = svgHeight * .8;
+
 
 var svg = d3
     .select("#scatter")
@@ -15,9 +13,9 @@ var svg = d3
     .attr("height", svgHeight);
 
 var chartGroup = svg.append("g")
-    .attr("transform", `translate(${margin}, ${margin})`);
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-d3.select("body")
+d3.select(".chart")
     .append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
@@ -25,6 +23,11 @@ d3.select("body")
 
 d3.csv("assets/data/data.csv").then(function (data, err) {
     if (err) throw err;
+
+    data.forEach(function(data) {
+        data.healthcare = +data.healthcare;
+        data.poverty = +data.poverty;
+    });
 
     var xLinearScale = d3.scaleLinear().range([0, width]);
     var yLinearScale = d3.scaleLinear().range([height, 0]);
@@ -71,8 +74,8 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .attr("cx", d => xScale(d.healthcare +2))
         .attr("cy", d => yScale(d.poverty +1))
         .attr("r", 20)
-        .attr("fill", "green")
-        .attr("opacity", ".5")
+        .attr("fill", "blue")
+        .attr("opacity", ".3")
         .on("mouseout", function (data) {
             toolTip.hide(data);
         });
